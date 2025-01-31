@@ -71,7 +71,14 @@ class App extends React.Component<{}, AppState> {
     const { loading, results, error } = this.state;
 
     return (
-      <>
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'right',
+        }}
+      >
+        <h1>rs-react-components-app</h1>
         <Search
           onSearch={this.handleSearch}
           defaultSearchTerm={localStorage.getItem('searchTerm') || ''}
@@ -79,7 +86,7 @@ class App extends React.Component<{}, AppState> {
         {loading && <div>Loading...</div>}
         <Results results={results} error={error} />
         {this.renderErrorButton()}
-      </>
+      </div>
     );
   }
 }
