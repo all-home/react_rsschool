@@ -14,7 +14,7 @@ interface AppState {
   loading: boolean;
 }
 
-class App extends React.Component<AppState> {
+class App extends React.Component<unknown, AppState> {
   state: AppState = {
     results: [],
     error: null,
@@ -71,7 +71,7 @@ class App extends React.Component<AppState> {
         style={{
           padding: '8px 16px',
           fontSize: '16px',
-          backgroundColor: '#ff6b6b', // Red color for error button
+          backgroundColor: '#ff6b6b',
           color: '#fff',
           border: 'none',
           borderRadius: '4px',
@@ -88,20 +88,20 @@ class App extends React.Component<AppState> {
     const { loading, results, error } = this.state;
 
     const appStyle = {
-      backgroundColor: 'rgba(18, 18, 18, 0.9)', // Semi-transparent dark background
+      backgroundColor: 'rgba(18, 18, 18, 0.9)',
       minHeight: '100vh',
       padding: '20px',
-      color: '#fff', // White text
+      color: '#fff',
     };
 
     const headerStyle = {
       fontSize: '2rem',
       marginBottom: '20px',
-      textAlign: 'center' as const, // Center align the header
+      textAlign: 'center' as const,
     };
 
     const loadingStyle = {
-      color: '#007bff', // Blue color for loading text
+      color: '#007bff',
       textAlign: 'center' as const,
       margin: '20px 0',
     };
