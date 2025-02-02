@@ -14,7 +14,7 @@ interface AppState {
   loading: boolean;
 }
 
-class App extends React.Component<{}, AppState> {
+class App extends React.Component<AppState> {
   state: AppState = {
     results: [],
     error: null,
@@ -42,12 +42,13 @@ class App extends React.Component<{}, AppState> {
       const response = await axios.get<{ results: ApiResponse[] }>(apiURL);
       const results = response.data.results.map((item) => ({
         name: item.name,
-        description: item.birth_year,
+        description: `Born in ${item.birth_year}`,
       }));
       this.setState({ results, error: null });
     } catch (error) {
       this.setState({
-        error: error instanceof Error ? error.message : 'Failed to fetch results.',
+        error:
+          error instanceof Error ? error.message : 'Failed to fetch results.',
         results: [],
       });
     } finally {
@@ -64,26 +65,55 @@ class App extends React.Component<{}, AppState> {
       throw new Error('Test Error');
     };
 
-    return <button onClick={throwError}>Throw Error</button>;
+    return (
+      <button
+        onClick={throwError}
+        style={{
+          padding: '8px 16px',
+          fontSize: '16px',
+          backgroundColor: '#ff6b6b', // Red color for error button
+          color: '#fff',
+          border: 'none',
+          borderRadius: '4px',
+          cursor: 'pointer',
+          marginTop: '20px',
+        }}
+      >
+        Throw Error
+      </button>
+    );
   };
 
   render() {
     const { loading, results, error } = this.state;
 
+    const appStyle = {
+      backgroundColor: 'rgba(18, 18, 18, 0.9)', // Semi-transparent dark background
+      minHeight: '100vh',
+      padding: '20px',
+      color: '#fff', // White text
+    };
+
+    const headerStyle = {
+      fontSize: '2rem',
+      marginBottom: '20px',
+      textAlign: 'center' as const, // Center align the header
+    };
+
+    const loadingStyle = {
+      color: '#007bff', // Blue color for loading text
+      textAlign: 'center' as const,
+      margin: '20px 0',
+    };
+
     return (
-      <div
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'right',
-        }}
-      >
-        <h1>rs-react-components-app</h1>
+      <div style={appStyle}>
+        <h1 style={headerStyle}>rs-react-components-app</h1>
         <Search
           onSearch={this.handleSearch}
           defaultSearchTerm={localStorage.getItem('searchTerm') || ''}
         />
-        {loading && <div>Loading...</div>}
+        {loading && <div style={loadingStyle}>Loading...</div>}
         <Results results={results} error={error} />
         {this.renderErrorButton()}
       </div>
