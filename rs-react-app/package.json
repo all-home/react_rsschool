@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://github.io/rolling-scopes-school/all-home-REACT2025Q1/",
+  "homepage": "https://all-home.github.io/react_rsschool/",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
