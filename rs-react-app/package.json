@@ -10,6 +10,7 @@
     "lint": "eslint .",
     "format:fix": "prettier --write .",
     "preview": "vite preview",
+    "prepare": "husky && chmod ug+x .husky/*",
     "deploy": "gh-pages -d build"
   },
   "dependencies": {
