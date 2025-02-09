@@ -1,12 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
+import useSearchQuery from '../hooks/useSearchQuery'; // Import the custom hook
 
 interface SearchProps {
   onSearch: (searchTerm: string) => void;
-  defaultSearchTerm: string;
 }
 
-const Search: React.FC<SearchProps> = ({ onSearch, defaultSearchTerm }) => {
-  const [searchTerm, setSearchTerm] = useState<string>(defaultSearchTerm);
+const Search: React.FC<SearchProps> = ({ onSearch }) => {
+  // Use the custom hook to manage the search term
+  const [searchTerm, setSearchTerm] = useSearchQuery('searchTerm', '');
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value.trim());
@@ -14,7 +15,6 @@ const Search: React.FC<SearchProps> = ({ onSearch, defaultSearchTerm }) => {
 
   const handleSearch = () => {
     onSearch(searchTerm);
-    localStorage.setItem('searchTerm', searchTerm);
   };
 
   return (
@@ -24,7 +24,7 @@ const Search: React.FC<SearchProps> = ({ onSearch, defaultSearchTerm }) => {
         alignItems: 'center',
         gap: '10px',
         padding: '10px',
-        backgroundColor: '#1e1e1e', // Dark background
+        backgroundColor: '#1e1e1e',
         borderRadius: '5px',
       }}
     >
@@ -36,11 +36,11 @@ const Search: React.FC<SearchProps> = ({ onSearch, defaultSearchTerm }) => {
         style={{
           padding: '8px',
           fontSize: '16px',
-          border: '1px solid #444', // Darker border
+          border: '1px solid #444',
           borderRadius: '4px',
           flex: '1',
-          backgroundColor: '#333', // Dark input background
-          color: '#fff', // White text
+          backgroundColor: '#333',
+          color: '#fff',
         }}
       />
       <button

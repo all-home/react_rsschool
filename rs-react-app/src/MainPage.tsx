@@ -5,8 +5,9 @@ import Search from './components/Search';
 import Results from './components/Results';
 import Details from './components/Details';
 import ErrorButton from './components/ErrorButton';
+import useSearchQuery from './hooks/useSearchQuery'; // Import the custom hook
 
-const ITEMS_PER_PAGE = 10;
+const ITEMS_PER_PAGE = 8;
 
 interface Result {
   id: number;
@@ -27,15 +28,18 @@ const MainPage: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
+  // Use the custom hook to manage the search term
+  const [searchTerm, setSearchTerm] = useSearchQuery('searchTerm', '');
+
   // Parse query parameters
   const queryParams = new URLSearchParams(location.search);
   const currentPage = parseInt(queryParams.get('page') || '1', 10);
   const detailsId = queryParams.get('details');
 
-  // Fetch results when the page loads
+  // Fetch results when the page loads or the search term changes
   useEffect(() => {
-    fetchResults('');
-  }, []);
+    fetchResults(searchTerm);
+  }, [searchTerm]);
 
   // Fetch results based on search term
   const fetchResults = async (searchTerm: string) => {
@@ -88,7 +92,7 @@ const MainPage: React.FC = () => {
     <div style={{ display: 'flex', height: '100vh' }}>
       {/* Left Section: Search Results */}
       <div style={{ flex: 1, padding: '20px', borderRight: '1px solid #444' }}>
-        <Search onSearch={fetchResults} defaultSearchTerm="" />
+        <Search onSearch={setSearchTerm} />
         {loading && <div>Loading...</div>}
         <Results
           results={paginatedResults}
