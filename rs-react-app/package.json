@@ -11,6 +11,8 @@
     "format:fix": "prettier --write .",
     "preview": "vite preview",
     "prepare": "husky && chmod ug+x .husky/*",
+    "test": "jest --config jest.config.js",
+    "test:coverage": "jest --config jest.config.js --coverage",
     "deploy": "gh-pages -d build"
   },
   "dependencies": {
