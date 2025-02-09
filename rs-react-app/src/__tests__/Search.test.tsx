@@ -1,6 +1,5 @@
-import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
-import Search from './Search';
+import Search from '../components/Search';
 
 describe('Search Component', () => {
   it('renders the search input and button', () => {

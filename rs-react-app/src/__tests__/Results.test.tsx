@@ -1,6 +1,5 @@
-import React from 'react';
 import { render, screen } from '@testing-library/react';
-import Results from './Results';
+import Results from '../components/Results';
 
 const mockResults = [
   { id: 1, name: 'Luke Skywalker', description: 'Born in 19BBY' },
