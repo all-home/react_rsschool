@@ -22,11 +22,32 @@ class App extends React.Component<unknown, AppState> {
   };
 
   componentDidMount() {
-    const searchTerm = localStorage.getItem('searchTerm') || '';
-    if (searchTerm) {
-      this.fetchResults(searchTerm);
-    }
+    // Fetch all results when the page loads
+    this.fetchAllResults();
   }
+
+  fetchAllResults = async () => {
+    this.setState({ loading: true, error: null });
+
+    const apiURL = `https://swapi.dev/api/people/`;
+
+    try {
+      const response = await axios.get<{ results: ApiResponse[] }>(apiURL);
+      const results = response.data.results.map((item) => ({
+        name: item.name,
+        description: `Born in ${item.birth_year}`,
+      }));
+      this.setState({ results, error: null });
+    } catch (error) {
+      this.setState({
+        error:
+          error instanceof Error ? error.message : 'Failed to fetch results.',
+        results: [],
+      });
+    } finally {
+      this.setState({ loading: false });
+    }
+  };
 
   fetchResults = async (searchTerm: string) => {
     if (!searchTerm.trim()) {
