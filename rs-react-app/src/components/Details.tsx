@@ -1,33 +1,25 @@
-/* eslint-disable prettier/prettier */
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
 interface DetailsProps {
-  itemId: string;
+  itemId: number;
 }
 
 const Details: React.FC<DetailsProps> = ({ itemId }) => {
   const [details, setDetails] = useState<any>(null);
-  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const fetchDetails = async () => {
       try {
-        const response = await axios.get(`https://swapi.dev/api/people/${itemId}`);
+        const response = await axios.get(`https://swapi.dev/api/people/${itemId}/`);
         setDetails(response.data);
       } catch (error) {
         console.error('Failed to fetch details:', error);
-      } finally {
-        setLoading(false);
       }
     };
 
     fetchDetails();
   }, [itemId]);
-
-  if (loading) {
-    return <div>Loading details...</div>;
-  }
 
   if (!details) {
     return <div>No details available.</div>;

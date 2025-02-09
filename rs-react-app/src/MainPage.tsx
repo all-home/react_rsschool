@@ -5,7 +5,8 @@ import Search from './components/Search';
 import Results from './components/Results';
 import Details from './components/Details';
 import ErrorButton from './components/ErrorButton';
-import useSearchQuery from './hooks/useSearchQuery'; // Import the custom hook
+import Pagination from './components/Pagination'; // Import the Pagination component
+import useSearchQuery from './hooks/useSearchQuery';
 
 const ITEMS_PER_PAGE = 8;
 
@@ -25,6 +26,7 @@ const MainPage: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [selectedItem, setSelectedItem] = useState<Result | null>(null);
+  const [detailsLoading, setDetailsLoading] = useState<boolean>(false);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -40,6 +42,16 @@ const MainPage: React.FC = () => {
   useEffect(() => {
     fetchResults(searchTerm);
   }, [searchTerm]);
+
+  // Sync selectedItem with URL on page load
+  useEffect(() => {
+    if (detailsId) {
+      const item = results.find((result) => result.id === parseInt(detailsId, 10));
+      if (item) {
+        setSelectedItem(item);
+      }
+    }
+  }, [detailsId, results]);
 
   // Fetch results based on search term
   const fetchResults = async (searchTerm: string) => {
@@ -66,9 +78,15 @@ const MainPage: React.FC = () => {
   };
 
   // Handle item click
-  const handleItemClick = (item: Result) => {
+  const handleItemClick = async (item: Result) => {
     setSelectedItem(item);
+    setDetailsLoading(true);
     navigate(`/?page=${currentPage}&details=${item.id}`);
+
+    // Simulate fetching details (replace with actual API call if needed)
+    setTimeout(() => {
+      setDetailsLoading(false);
+    }, 1000);
   };
 
   // Handle page change
@@ -91,13 +109,16 @@ const MainPage: React.FC = () => {
   return (
     <div style={{ display: 'flex', height: '100vh' }}>
       {/* Left Section: Search Results */}
-      <div style={{ flex: 1, padding: '20px', borderRight: '1px solid #444' }}>
+      <div style={{ flex: 1, padding: '20px', borderRight: selectedItem ? '1px solid #444' : 'none' }}>
         <Search onSearch={setSearchTerm} />
         {loading && <div>Loading...</div>}
         <Results
           results={paginatedResults}
           error={error}
           onItemClick={handleItemClick}
+        />
+        {/* Add Pagination Component */}
+        <Pagination
           currentPage={currentPage}
           totalPages={Math.ceil(results.length / ITEMS_PER_PAGE)}
           onPageChange={handlePageChange}
@@ -111,7 +132,11 @@ const MainPage: React.FC = () => {
           <button onClick={closeDetails} style={{ marginBottom: '10px' }}>
             Close Details
           </button>
-          <Details itemId={selectedItem.id} />
+          {detailsLoading ? (
+            <div>Loading details...</div>
+          ) : (
+            <Details itemId={selectedItem.id} />
+          )}
         </div>
       )}
     </div>

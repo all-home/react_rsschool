@@ -1,22 +1,13 @@
 import React from 'react';
+import ResultItem from './ResultItem';
 
 interface ResultsProps {
-  results: Result[];
+  results: { id: number; name: string; description: string }[];
   error: string | null;
-  onItemClick: (item: Result) => void;
-  currentPage: number;
-  totalPages: number;
-  onPageChange: (page: number) => void;
+  onItemClick: (item: { id: number; name: string; description: string }) => void;
 }
 
-const Results: React.FC<ResultsProps> = ({
-  results,
-  error,
-  onItemClick,
-  currentPage,
-  totalPages,
-  onPageChange,
-}) => {
+const Results: React.FC<ResultsProps> = ({ results, error, onItemClick }) => {
   const containerStyle = {
     backgroundColor: '#1e1e1e',
     padding: '10px',
@@ -34,12 +25,6 @@ const Results: React.FC<ResultsProps> = ({
     borderBottom: '1px solid #444',
   };
 
-  const cellStyle = {
-    padding: '8px',
-    borderBottom: '1px solid #444',
-    cursor: 'pointer',
-  };
-
   const errorStyle = {
     color: '#ff6b6b',
     backgroundColor: '#1e1e1e',
@@ -52,22 +37,6 @@ const Results: React.FC<ResultsProps> = ({
     backgroundColor: '#1e1e1e',
     padding: '10px',
     borderRadius: '5px',
-  };
-
-  const paginationStyle = {
-    display: 'flex',
-    justifyContent: 'center',
-    marginTop: '20px',
-  };
-
-  const pageButtonStyle = {
-    margin: '0 5px',
-    padding: '5px 10px',
-    backgroundColor: '#007bff',
-    color: '#fff',
-    border: 'none',
-    borderRadius: '4px',
-    cursor: 'pointer',
   };
 
   if (error) {
@@ -89,29 +58,10 @@ const Results: React.FC<ResultsProps> = ({
         </thead>
         <tbody>
           {results.map((result) => (
-            <tr key={result.id} onClick={() => onItemClick(result)}>
-              <td style={cellStyle}>{result.name}</td>
-              <td style={cellStyle}>{result.description}</td>
-            </tr>
+            <ResultItem key={result.id} result={result} onItemClick={onItemClick} />
           ))}
         </tbody>
       </table>
-
-      {/* Pagination */}
-      <div style={paginationStyle}>
-        {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-          <button
-            key={page}
-            style={{
-              ...pageButtonStyle,
-              backgroundColor: page === currentPage ? '#0056b3' : '#007bff',
-            }}
-            onClick={() => onPageChange(page)}
-          >
-            {page}
-          </button>
-        ))}
-      </div>
     </div>
   );
 };
