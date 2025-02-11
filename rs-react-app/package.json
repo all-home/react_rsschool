@@ -8,6 +8,7 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
+    "lint:fix": "eslint ./src/**/*.{ts,tsx,js,jsx} --fix",
     "format:fix": "prettier --write .",
     "preview": "vite preview",
     "prepare": "husky && chmod ug+x .husky/*",

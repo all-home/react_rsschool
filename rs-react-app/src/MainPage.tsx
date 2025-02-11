@@ -46,7 +46,9 @@ const MainPage: React.FC = () => {
   // Sync selectedItem with URL on page load
   useEffect(() => {
     if (detailsId) {
-      const item = results.find((result) => result.id === parseInt(detailsId, 10));
+      const item = results.find(
+        (result) => result.id === parseInt(detailsId, 10)
+      );
       if (item) {
         setSelectedItem(item);
       }
@@ -70,7 +72,9 @@ const MainPage: React.FC = () => {
       setResults(results);
     } catch (error) {
       console.error('Axios Error:', error);
-      setError(error instanceof Error ? error.message : 'Failed to fetch results.');
+      setError(
+        error instanceof Error ? error.message : 'Failed to fetch results.'
+      );
       setResults([]);
     } finally {
       setLoading(false);
@@ -91,7 +95,9 @@ const MainPage: React.FC = () => {
 
   // Handle page change
   const handlePageChange = (page: number) => {
-    navigate(`/?page=${page}${selectedItem ? `&details=${selectedItem.id}` : ''}`);
+    navigate(
+      `/?page=${page}${selectedItem ? `&details=${selectedItem.id}` : ''}`
+    );
   };
 
   // Close details section
@@ -109,7 +115,13 @@ const MainPage: React.FC = () => {
   return (
     <div style={{ display: 'flex', height: '100vh' }}>
       {/* Left Section: Search Results */}
-      <div style={{ flex: 1, padding: '20px', borderRight: selectedItem ? '1px solid #444' : 'none' }}>
+      <div
+        style={{
+          flex: 1,
+          padding: '20px',
+          borderRight: selectedItem ? '1px solid #444' : 'none',
+        }}
+      >
         <Search onSearch={setSearchTerm} />
         {loading && <div>Loading...</div>}
         <Results

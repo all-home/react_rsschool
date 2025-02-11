@@ -4,7 +4,11 @@ import ResultItem from './ResultItem';
 interface ResultsProps {
   results: { id: number; name: string; description: string }[];
   error: string | null;
-  onItemClick: (item: { id: number; name: string; description: string }) => void;
+  onItemClick: (item: {
+    id: number;
+    name: string;
+    description: string;
+  }) => void;
 }
 
 const Results: React.FC<ResultsProps> = ({ results, error, onItemClick }) => {
@@ -58,7 +62,11 @@ const Results: React.FC<ResultsProps> = ({ results, error, onItemClick }) => {
         </thead>
         <tbody>
           {results.map((result) => (
-            <ResultItem key={result.id} result={result} onItemClick={onItemClick} />
+            <ResultItem
+              key={result.id}
+              result={result}
+              onItemClick={onItemClick}
+            />
           ))}
         </tbody>
       </table>

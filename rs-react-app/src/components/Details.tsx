@@ -11,7 +11,9 @@ const Details: React.FC<DetailsProps> = ({ itemId }) => {
   useEffect(() => {
     const fetchDetails = async () => {
       try {
-        const response = await axios.get(`https://swapi.dev/api/people/${itemId}/`);
+        const response = await axios.get(
+          `https://swapi.dev/api/people/${itemId}/`
+        );
         setDetails(response.data);
       } catch (error) {
         console.error('Failed to fetch details:', error);

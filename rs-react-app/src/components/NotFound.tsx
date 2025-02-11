@@ -14,8 +14,12 @@ const NotFound: React.FC = () => {
         textAlign: 'center',
       }}
     >
-      <h1 style={{ fontSize: '3rem', marginBottom: '20px' }}>404 - Page Not Found</h1>
-      <p style={{ fontSize: '1.2rem' }}>The page you are looking for does not exist.</p>
+      <h1 style={{ fontSize: '3rem', marginBottom: '20px' }}>
+        404 - Page Not Found
+      </h1>
+      <p style={{ fontSize: '1.2rem' }}>
+        The page you are looking for does not exist.
+      </p>
     </div>
   );
 };

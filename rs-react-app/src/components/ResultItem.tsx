@@ -2,7 +2,11 @@ import React from 'react';
 
 interface ResultItemProps {
   result: { id: number; name: string; description: string };
-  onItemClick: (item: { id: number; name: string; description: string }) => void;
+  onItemClick: (item: {
+    id: number;
+    name: string;
+    description: string;
+  }) => void;
 }
 
 const ResultItem: React.FC<ResultItemProps> = ({ result, onItemClick }) => {
